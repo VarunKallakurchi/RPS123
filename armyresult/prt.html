@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Result Publication System</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Monda:400,700" rel="stylesheet">
+        <link href="http://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container-fluid" style="padding-right: 0px;padding-left: 0px;">
+            <div class="first">
+                <div class="first_one">
+                    <img src="images/Awes.png" class="img-circle" alt="AWES" width="130" height="130">
+                </div>
+                <div class="first_two">
+                    <h1 class="header_1 text-center">ARMY WELFARE EDUCATION SOCIETY</h1>
+                </div>
+            </div>
+            <div class="well roll" id="roll_div">
+                <!-- <p id="no_found" style="color: red;display: none;">Result Not Found</p> -->
+                <div class="row col-md-lg-xs-12 form-group-center">
+                    <label class="label_1">Enter the Roll Number for PRT Results : </label>
+                    <input type="text" id="roll_no" class="form-control text_fc" name="Roll Number" placeholder="Ex: 3101028005">
+                    <button type="button" class="btn btn-info text_btn" onclick="prt_result()">Click for Result</button>
+                </div>
+            </div>
+            <div class="well roll1" id="table_div" style="display: none;">
+                <table class="table table-bordered table-responsive">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Roll No</th>
+                            <th class="text-center">Name</th>
+                            <th class="text-center">Subject</th>
+                            <th class="text-center">Part-A%</th>
+                            <th class="text-center">Part-B%</th>
+                            <th class="text-center">Overall%</th>
+                            <th class="text-center">Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="td_roll">data</td>
+                            <td id="td_name">data</td>
+                            <td id="td_subject">data</td>
+                            <td id="td_part-a">data</td>
+                            <td id="td_part-b">data</td>
+                            <td id="td_overall">data</td>
+                            <td id="td_result">data</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <button class="btn btn-primary" onclick="" style="margin-right: 2em;">Part A% Chart</button>
+                <button class="btn btn-primary" onclick="" style="margin-right: 2em;">Part B% Chart</button>
+                <button class="btn btn-primary" onclick="" style="margin-right: 2em;">Overall% Chart</button>
+                <button class="btn btn-primary" onclick="" style="margin-right: 2em;">Result Chart</button><br>
+                <button class="btn btn-primary" onclick="back()" style="margin-top: 25px;">Back</button>
+            </div>
+            <div class="fourth">
+               <h4 class="header_4 text-center">Copyright ©2018 MatrixIOTA Labs Pvt. Ltd. All rights reserved.</h4>
+            </div>
+        </div>
+        <script>
+        var result;
+        function prt_result() {
+        var roll = document.getElementById("roll_no").value;
+        console.log(roll);
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        result = JSON.parse(this.responseText);
+        if (result.length) {
+        // document.getElementById("no_found").style.display = "none";
+        
+        display_result();
+        } else
+        // document.getElementById("no_found").style.display = "block";
+        alert("Result Not Found");
+        }
+        };
+        xhttp.open("POST", "http://localhost:3000/prt", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("roll_no=" + roll);
+        }
+        function display_result() {
+        console.log(result);
+        document.getElementById("roll_div").style.display = "none";
+        document.getElementById("table_div").style.display = "block";
+        document.getElementById("td_roll").innerHTML = result[0].roll_number;
+        document.getElementById("td_name").innerHTML = result[0].candidate_name;
+        document.getElementById("td_subject").innerHTML = result[0].subject;
+        document.getElementById("td_part-a").innerHTML = result[0].part_A_p;
+        document.getElementById("td_part-b").innerHTML = result[0].part_B_p;
+        document.getElementById("td_overall").innerHTML = result[0].overall_p;
+        document.getElementById("td_result").innerHTML = result[0].result;
+        }
+        function back() {
+        document.getElementById("roll_div").style.display = "block";
+        document.getElementById("table_div").style.display = "none";
+        }
+        function myFunction() {
+        alert("Result Not Found");
+        }
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+        <!-- <script src="js/script.js"></script> -->
+    </body>
+</html>
+<!-- <div>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="subject-tab" data-toggle="tab" href="#subject" role="tab" aria-controls="subject" aria-selected="true">Subjects</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="part_A_p-tab" data-toggle="tab" href="#part_A_p" role="tab" aria-controls="part_A_p" aria-selected="false">Part-A%</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="part_B_p-tab" data-toggle="tab" href="#part_B_p" role="tab" aria-controls="part_B_p" aria-selected="false">Part-B%</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="overall_p-tab" data-toggle="tab" href="#overall_p" role="tab" aria-controls="overall_p" aria-selected="false">Overall%</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="result-tab" data-toggle="tab" href="#result" role="tab" aria-controls="result" aria-selected="false">Result</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="subject" role="tabpanel" aria-labelledby="subject-tab">...</div>
+                        <div class="tab-pane fade" id="part_A_p" role="tabpanel" aria-labelledby="part_A_p-tab">...</div>
+                        <div class="tab-pane fade" id="part_B_p" role="tabpanel" aria-labelledby="part_B_p-tab">...</div>
+                        <div class="tab-pane fade" id="overall_p" role="tabpanel" aria-labelledby="overall_p-tab">...</div>
+                        <div class="tab-pane fade" id="result" role="tabpanel" aria-labelledby="result-tab">...</div>
+                    </div>
+                </div> -->

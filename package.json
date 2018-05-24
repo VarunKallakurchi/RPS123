@@ -1,0 +1,23 @@
+{
+    "name": "army",
+    "version": "1.0.0",
+    "description": "",
+    "main": "result.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.18.2",
+        "cookie-parser": "^1.4.3",
+        "ejs": "^2.5.7",
+        "express": "^4.16.2",
+        "express-session": "^1.15.6",
+        "express-validator": "^5.0.2",
+        "mongodb": "^3.0.3",
+        "mongojs": "^2.5.0",
+        "mongoose": "^5.0.10",
+        "nodemon": "^1.17.2"
+    }
+}
